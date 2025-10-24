@@ -1,0 +1,5 @@
+
+{
+  "name": "The Chosen One - AI Resume Screener",
+  "description": "An intelligent resume screening system that analyzes and ranks candidate resumes against job descriptions using the Gemini API. Upload a resume, provide a job description, and get an instant compatibility score and detailed analysis."
+}
