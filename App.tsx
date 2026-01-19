@@ -5,7 +5,7 @@ import { ResultsPanel } from './components/ResultsPanel';
 import { HistoryPanel } from './components/HistoryPanel';
 import AuthModal from './components/AuthModal';
 import UserProfile from './components/UserProfile';
-import { analyzeResume } from './services/geminiService';
+import { analyzeResume } from './services/groqService';
 import { parseFile } from './services/fileParser';
 import { supabase, isSupabaseConfigured } from './lib/supabase';
 import { saveAnalysisResult, getUserAnalysisResults, deleteAnalysisResult } from './lib/database';
@@ -26,7 +26,7 @@ export default function App() {
     education: 10,
   });
   const [history, setHistory] = useState<StoredAnalysis[]>([]);
-  
+
   // Authentication state
   const [user, setUser] = useState<any>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -206,14 +206,14 @@ export default function App() {
     setShowUserProfile(false);
     // User state will be updated by the auth state change listener
   };
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 font-sans text-slate-100 relative overflow-hidden">
       {/* Premium Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-500/20 via-transparent to-transparent"></div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-500/15 via-transparent to-transparent"></div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent"></div>
-      
+
       {/* Animated Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0" style={{
@@ -222,13 +222,13 @@ export default function App() {
           animation: 'float 20s ease-in-out infinite'
         }}></div>
       </div>
-      
-      <Header 
+
+      <Header
         user={user}
         onAuthClick={() => setShowAuthModal(true)}
         onProfileClick={() => setShowUserProfile(true)}
       />
-      
+
       {/* Hero Section */}
       <section className="relative z-10 pt-32 pb-20">
         <div className="container mx-auto px-6 lg:px-8">
@@ -276,7 +276,7 @@ export default function App() {
                 isLoading={isLoading}
                 hasRequiredInputs={!!jobDescription.trim() && !!resumeText.trim()}
               />
-              <HistoryPanel 
+              <HistoryPanel
                 history={history}
                 onSelect={handleSelectHistory}
                 onDelete={handleDeleteHistory}
@@ -284,7 +284,7 @@ export default function App() {
                 currentAnalysisId={analysisResult?.id}
               />
             </div>
-            
+
             {/* Right Column - Results */}
             <div className="xl:col-span-1">
               <ResultsPanel
