@@ -3,10 +3,13 @@ import type { AnalysisResult, Weights } from '../types';
 // IMPORTANT: Add your own Groq API key in an environment variable for this to work.
 // For example, in a local environment, you might create a .env file:
 // GROQ_API_KEY=YOUR_GROQ_API_KEY
-const apiKey = process.env.API_KEY;
-if (!apiKey) {
-    throw new Error("API_KEY environment variable is not set. Please add your Groq API key to the .env file.");
-}
+const getApiKey = (): string => {
+    const key = process.env.API_KEY || process.env.GROQ_API_KEY;
+    if (!key) {
+        throw new Error("API_KEY environment variable is not set. Please add your Groq API key to the .env file or Vercel environment variables.");
+    }
+    return key;
+};
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
@@ -70,7 +73,7 @@ export const analyzeResume = async (
         const response = await fetch(GROQ_API_URL, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${apiKey}`,
+                'Authorization': `Bearer ${getApiKey()}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
