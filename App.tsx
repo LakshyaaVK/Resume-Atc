@@ -261,41 +261,44 @@ export default function App() {
 
       {/* Main Content */}
       <main className="relative z-10 pb-20">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-            {/* Left Column - Input & History */}
-            <div className="xl:col-span-2 space-y-8">
-              <InputPanel
-                jobDescription={jobDescription}
-                setJobDescription={setJobDescription}
-                onFileChange={handleFileChange}
-                fileName={fileName}
-                weights={weights}
-                setWeights={setWeights}
-                onAnalyze={handleAnalyzeClick}
-                isLoading={isLoading}
-                hasRequiredInputs={!!jobDescription.trim() && !!resumeText.trim()}
-              />
-              <HistoryPanel
-                history={history}
-                onSelect={handleSelectHistory}
-                onDelete={handleDeleteHistory}
-                onClear={handleClearHistory}
-                currentAnalysisId={analysisResult?.id}
-              />
-            </div>
+        <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
+          {/* Input Section */}
+          <div className="mb-8">
+            <InputPanel
+              jobDescription={jobDescription}
+              setJobDescription={setJobDescription}
+              onFileChange={handleFileChange}
+              fileName={fileName}
+              weights={weights}
+              setWeights={setWeights}
+              onAnalyze={handleAnalyzeClick}
+              isLoading={isLoading}
+              hasRequiredInputs={!!jobDescription.trim() && !!resumeText.trim()}
+            />
+          </div>
 
-            {/* Right Column - Results */}
-            <div className="xl:col-span-1">
-              <ResultsPanel
-                result={analysisResult}
-                isLoading={isLoading}
-                error={error}
-              />
-            </div>
+          {/* Results Section - Full Width, Centered */}
+          <div className="mb-8">
+            <ResultsPanel
+              result={analysisResult}
+              isLoading={isLoading}
+              error={error}
+            />
+          </div>
+
+          {/* History Section - Full Width */}
+          <div>
+            <HistoryPanel
+              history={history}
+              onSelect={handleSelectHistory}
+              onDelete={handleDeleteHistory}
+              onClear={handleClearHistory}
+              currentAnalysisId={analysisResult?.id}
+            />
           </div>
         </div>
       </main>
+
 
       {/* Authentication Modal */}
       {isSupabaseConfigured() && (
